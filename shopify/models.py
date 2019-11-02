@@ -50,6 +50,9 @@ class Product(TimeStampedModel):
         null=True
     )
 
+    def __str__(self):
+        return self.title
+
 
 class Variant(TimeStampedModel):
     id = models.CharField(
@@ -114,7 +117,7 @@ class Variant(TimeStampedModel):
     price = models.CharField(
         max_length=30
     )
-    product_id = models.ForeignKey(Product,on_delete=CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=CASCADE)
     requires_shipping = models.CharField(
         max_length=30
     )
@@ -136,3 +139,6 @@ class Variant(TimeStampedModel):
     weight_unit = models.CharField(
         max_length=30
     )
+
+    def __str__(self):
+        return f"{self.product_id} - {self.title}"
