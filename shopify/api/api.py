@@ -3,15 +3,13 @@ import json
 import requests
 
 from djshopify.settings import SHOPIFY_URL
-from shopify.models import Product
+from shopify.models import Product, Variant
 
 
 def populate_products():
     response = requests.get(SHOPIFY_URL)
     response_dictionary = json.loads(response.content)
     products = response_dictionary["products"]
-    print(len(products))
-    pprint(products)
     for product in products:
         product_object, created = Product.objects.update_or_create(
             id=product["id"],
@@ -31,4 +29,39 @@ def populate_products():
                 'image': product["image"]
             }
         )
+        variants = product["variants"]
+        for variant in variants:
+            pprint(variant)
+            variant_object, created = Variant.objects.update_or_create(
+                id=variant["id"],
+                defaults={
+                    'admin_graphql_api_id': variant["admin_graphql_api_id"],
+                    'barcode': variant["barcode"],
+                    'compare_at_price': variant["compare_at_price"],
+                    'created_at': variant["created_at"],
+                    'fulfillment_service': variant["fulfillment_service"],
+                    'grams': variant["grams"],
+                    'image_id': variant["image_id"],
+                    "inventory_item_id": variant["inventory_item_id"],
+                    "inventory_management": variant["inventory_management"],
+                    "inventory_policy": variant["inventory_policy"],
+                    "inventory_quantity": variant["inventory_quantity"],
+                    "old_inventory_quantity": variant["old_inventory_quantity"],
+                    "option1": variant["option1"],
+                    "option2": variant["option2"],
+                    "option3": variant["option3"],
+                    "position": variant["position"],
+                    "price": variant["price"],
+                    "product_id": product_object,
+                    "requires_shipping": variant["requires_shipping"],
+                    "sku": variant["sku"],
+                    "taxable": variant["taxable"],
+                    "title": variant["title"],
+                    "updated_at": variant["updated_at"],
+                    "weight": variant["weight"],
+                    "weight_unit": variant["weight_unit"],
+
+                }
+            )
+
 
