@@ -2,30 +2,39 @@
 {% block content %}
     <br>
     <h3>Cart</h3>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in cart_items %}
+    {% if cart_items %}
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <th>{{ item }}</th>
-                <td>{{ item.price }}</td>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for item in cart_items %}
+                <tr>
+                    <th>{{ item }}</th>
+                    <td>{{ item.price }}</td>
+
+                </tr>
+            {% endfor %}
+            <tr>
+                <th></th>
+
+                <th scope="row">{{ total }}</th>
 
             </tr>
-        {% endfor %}
-        <tr>
-            <th></th>
 
-            <th scope="row">{{ total }}</th>
+            </tbody>
+        </table>
 
-        </tr>
-
-        </tbody>
-    </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            You have no items in your cart.
+        </div>
+    {% endif %}
 
 
 {% endblock %}
