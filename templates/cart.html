@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <h3>Cart</h3>
+     <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Vendor</th>
+            <th scope="col">Product Type</th>
+            <th scope="col">Cost</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart_items %}
+            <tr>
+                <th scope="row">{{ item }}</th>
+                <td>{{ item }}</td>
+                <td>{{ item }}</td>
+                <td>{{ item }}</td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+{% endblock %}
