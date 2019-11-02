@@ -25,7 +25,11 @@ class CartView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["cart_items"] = "test"
+        if not self.request.user.is_authenticated:
+            variants = self.request.session['variants']
+            variants = Variant.objects.filter(id__in=variants)
+
+        context["cart_items"] = variants
         pprint(context)
         return context
 
