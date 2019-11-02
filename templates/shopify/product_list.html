@@ -14,10 +14,10 @@
         <tbody>
         {% for product in product_list %}
             <tr>
-                <th scope="row">{{ product.title }}</th>
-                <td>{{ product.vendor }}</td>
-                <td>{{ product.product_type }}</td>
-                <td>{{ product.variants.first.price }}</td>
+                <th scope="row"><a href="/product/{{ product.id }}">{{ product.title }}</a></th>
+                <td><a href="/product/{{ product.id }}">{{ product.vendor }}</a></td>
+                <td><a href="/product/{{ product.id }}">{{ product.product_type }}</a></td>
+                <td><a href="/product/{{ product.id }}">{{ product.variants.first.price }}</a></td>
             </tr>
         {% endfor %}
 

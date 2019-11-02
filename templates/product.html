@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <h3>Product</h3>
+     <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Vendor</th>
+            <th scope="col">Product Type</th>
+        </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>{{ product.title }}</td>
+                <td>{{ product.vendor }}</td>
+                <td>{{ product.product_type }}</td>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+    <h3>Variants</h3>
+     <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for variant in variants %}
+            <tr>
+                <th scope="row">{{ variant.title }}</th>
+                <td>{{ variant.inventory_quantity }}</td>
+                <td>{{ variant.price }}</td>
+                <td><a href="/add_to_cart/{{ vairant.id }}">Add to Cart</a></td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+{% endblock %}
