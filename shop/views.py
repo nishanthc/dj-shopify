@@ -1,10 +1,17 @@
 # Create your views here.
+from pprint import pprint
 
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
+
+from shopify.models import Product
 
 
-class ProductListingView(TemplateView):
-    template_name = "product_listing.html"
+class ProductListingView(ListView):
+    model = Product
+    paginate_by = 100  # if pagination is desired
 
-    def dispatch(self, request, *args, **kwargs):
-        return super(ProductListingView, self).dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        pprint(context)
+        return context

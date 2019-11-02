@@ -117,7 +117,7 @@ class Variant(TimeStampedModel):
     price = models.CharField(
         max_length=30
     )
-    product_id = models.ForeignKey(Product, on_delete=CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=CASCADE,related_name="variants")
     requires_shipping = models.CharField(
         max_length=30
     )
