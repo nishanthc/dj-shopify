@@ -46,6 +46,13 @@ class ProductDetailView(DetailView):
 class AddToCartView(View):
     def get(self, *args, **kwargs):
         variant = get_object_or_404(Variant, pk=kwargs['pk'])
-        messages.success(self.request, 'Product sucessfully added to your cart!')
-        pprint(self.request.__dict__)
-        return redirect('product-detail', pk=variant.product_id.id)
+        if not self.request.user.is_authenticated:
+            if self.request.session.is_empty():
+                self.request.session['variants'] = []
+            self.request.session['variants'].append(variant.id)
+            messages.success(self.request, 'Product sucessfully added to your cart!')
+            return redirect('product-detail', pk=variant.product_id.id)
+        else:
+            return redirect('product-detail', pk=variant.product_id.id)
+
+
