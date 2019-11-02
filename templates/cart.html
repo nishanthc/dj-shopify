@@ -8,21 +8,26 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
 
 
-            {% for item in cart_items %}
+            {% for variant in cart_items %}
                 <tr>
-                    <th>{{ item }}</th>
-                    <td>{{ item.price }}</td>
+                    <th>{{ variant }}</th>
+                    <td>{{ variant.price }}</td>
+                    <td><a href="/remove_from_cart/{{ variant.id }}"><i class="fas fa-trash-alt"></i>
+
+                    </a></td>
+
 
                 </tr>
             {% endfor %}
             <tr>
                 <th></th>
-
+                <td></td>
                 <th scope="row">{{ total }}</th>
 
             </tr>

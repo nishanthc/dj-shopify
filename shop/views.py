@@ -68,3 +68,13 @@ class AddToCartView(View):
             return redirect('product-detail', pk=variant.product_id.id)
         else:
             return redirect('product-detail', pk=variant.product_id.id)
+
+class RemoveFromCartView(View):
+    def get(self, *args, **kwargs):
+        variant = get_object_or_404(Variant, pk=kwargs['pk'])
+        if not self.request.user.is_authenticated:
+            self.request.session['variants'].remove(variant.id)
+            messages.success(self.request, 'Product removed from your cart!')
+            return redirect('cart')
+        else:
+            return redirect('cart')
