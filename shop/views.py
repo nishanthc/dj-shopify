@@ -19,6 +19,7 @@ class ProductListingView(ListView):
         pprint(context)
         return context
 
+
 class CartView(TemplateView):
     template_name = 'cart.html'
 
@@ -27,6 +28,7 @@ class CartView(TemplateView):
         context["cart_items"] = "test"
         pprint(context)
         return context
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -40,13 +42,10 @@ class ProductDetailView(DetailView):
 
         return context
 
+
 class AddToCartView(View):
     def get(self, *args, **kwargs):
         variant = get_object_or_404(Variant, pk=kwargs['pk'])
         messages.success(self.request, 'Product sucessfully added to your cart!')
         pprint(self.request.__dict__)
         return redirect('product-detail', pk=variant.product_id.id)
-
-
-
-
