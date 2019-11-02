@@ -25,11 +25,21 @@ class CartView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if not self.request.user.is_authenticated:
-            variants = self.request.session['variants']
-            variants = Variant.objects.filter(id__in=variants)
+        variants_list = []
 
-        context["cart_items"] = variants
+        if not self.request.user.is_authenticated:
+            variants_session = self.request.session['variants']
+            for variant in variants_session:
+                try:
+                    variant_object = Variant.objects.get(id=variant)
+                    variants_list.append(variant_object)
+                except Variant.DoesNotExist:
+                    pass
+        total = 0
+        for variant in variants_list:
+            total = total + float(variant.price)
+        context["cart_items"] = variants_list
+        context["total"] = total
         pprint(context)
         return context
 
@@ -58,5 +68,3 @@ class AddToCartView(View):
             return redirect('product-detail', pk=variant.product_id.id)
         else:
             return redirect('product-detail', pk=variant.product_id.id)
-
-
