@@ -6,6 +6,7 @@ from model_utils.models import TimeStampedModel
 class Product(TimeStampedModel):
 
     id = models.CharField(
+        primary_key=True,
         max_length=30
     )
     title = models.CharField(
@@ -45,5 +46,6 @@ class Product(TimeStampedModel):
         max_length=30
     )
     image = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
