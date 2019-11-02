@@ -27,26 +27,35 @@
                 <a class="nav-link" href="/cart">Cart</a>
             </li>
 
-                {% if user.is_authenticated %}
-                     <li class="nav-item">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
                     <a class="nav-link" href="/accounts/logout">Logout</a>
-                    </li>
+                </li>
 
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/accounts/login">Login</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="/accounts/signup">Signup</a>
-                    </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/accounts/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/accounts/signup">Signup</a>
+                </li>
 
 
-                {% endif %}
+            {% endif %}
 
         </ul>
     </div>
 </nav>
 <div class="container">
+    {% if messages %}
+        <br>
+        <div class="alert alert-info" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}</div>
+
+
+    {% endif %}
     {% block content %}{% endblock %}
 </div>
 

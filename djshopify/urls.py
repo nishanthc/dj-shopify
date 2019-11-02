@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 
-from shop.views import ProductListingView, CartView, ProductDetailView
+from shop.views import ProductListingView, CartView, ProductDetailView, AddToCartView
 
 urlpatterns = [
     path('', ProductListingView.as_view()),
     path('cart/', CartView.as_view()),
     re_path(r'^product/(?P<pk>\d+)$', ProductDetailView.as_view(), name='product-detail'),
+    re_path(r'^add_to_cart/(?P<pk>\d+)$', AddToCartView.as_view(), name='add-to-cart'),
+
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
