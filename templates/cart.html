@@ -34,6 +34,12 @@
 
             </tbody>
         </table>
+        {% load crispy_forms_tags %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-success">Login</button>
+        </form>
 
     {% else %}
         <div class="alert alert-info" role="alert">

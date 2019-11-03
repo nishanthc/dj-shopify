@@ -4,9 +4,10 @@ from pprint import pprint
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, RedirectView
+from django.views.generic import TemplateView, ListView, DetailView, RedirectView, CreateView
 
-from shopify.models import Product, Variant
+from shopify.api.api import create_order
+from shopify.models import Product, Variant, Customer
 
 
 class ProductListingView(ListView):
@@ -20,7 +21,10 @@ class ProductListingView(ListView):
         return context
 
 
-class CartView(TemplateView):
+class CartView(CreateView):
+    model = Customer
+    fields = ('first_name', 'last_name', 'address','email')
+    success_url = "success"
     template_name = 'cart.html'
 
     def get_context_data(self, **kwargs):
@@ -40,8 +44,24 @@ class CartView(TemplateView):
             total = total + float(variant.price)
         context["cart_items"] = variants_list
         context["total"] = total
-        pprint(context)
         return context
+
+    def form_valid(self, form, **kwargs):
+        if self.request.user:
+            user = self.request.user
+
+            form.instance.user = user.id
+        context = self.get_context_data(**kwargs)
+        cart_items = context["cart_items"]
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        address = form.cleaned_data['address']
+        email = form.cleaned_data['email']
+        customer = form.instance
+        create_order(customer,cart_items)
+        self.request.session['variants'] = []
+
+        return super().form_valid(form)
 
 
 class ProductDetailView(DetailView):
