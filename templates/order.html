@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <h3>Order</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Financial Status</th>
+            <th scope="col">Fulfillment Status</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td>{{ order.number }}</td>
+            <td>{{ order.customer.first_name }} {{ order.customer.last_name }}</td>
+            <td>{{ order.total_price }}</td>
+            <td>{{ order.financial_status }}</td>
+            <td>{{ order.fulfillment_status }}</td>
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    {#    <h3>Variants</h3>#}
+    {#    <table class="table table-striped">#}
+    {#        <thead>#}
+    {#        <tr>#}
+    {#            <th scope="col">Name</th>#}
+    {#            <th scope="col">Stock</th>#}
+    {#            <th scope="col">Price</th>#}
+    {#            <th scope="col"></th>#}
+    {#        </tr>#}
+    {#        </thead>#}
+    {#        <tbody>#}
+    {#        {% for variant in variants %}#}
+    {#            <tr>#}
+    {#                <th scope="row">{{ variant.title }}</th>#}
+    {#                <td>{{ variant.inventory_quantity }}</td>#}
+    {#                <td>{{ variant.price }}</td>#}
+    {#                <td><a href="/add_to_cart/{{ variant.id }}">Add to Cart</a></td>#}
+    {#            </tr>#}
+    {#        {% endfor %}#}
+    {##}
+    {##}
+    {#        </tbody>#}
+    {#    </table>#}
+
+{% endblock %}

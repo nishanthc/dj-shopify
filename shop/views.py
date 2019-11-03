@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, RedirectView, CreateView
 
 from shopify.api.api import create_order
-from shopify.models import Product, Variant, Customer
+from shopify.models import Product, Variant, Customer, Order
 
 
 class ProductListingView(ListView):
@@ -72,6 +72,16 @@ class ProductDetailView(DetailView):
         product = super(ProductDetailView, self).get_object()
         context["variants"] = product.variants.all()
         pprint(context)
+
+        return context
+
+class OrderDetailView(DetailView):
+    model = Order
+    template_name = 'order.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        order = super(OrderDetailView, self).get_object()
 
         return context
 
