@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 
-from shop.views import ProductListingView, CartView, ProductDetailView, AddToCartView, RemoveFromCartView, \
-    OrderDetailView
+from shop.views import OrderListingView, ProductListingView, CartView, ProductDetailView, AddToCartView, \
+    RemoveFromCartView, \
+    OrderDetailView, CustomerListingView, CustomerDetailView
 
 urlpatterns = [
     path('', ProductListingView.as_view()),
@@ -26,6 +27,9 @@ urlpatterns = [
     re_path(r'^add_to_cart/(?P<pk>\d+)$', AddToCartView.as_view(), name='add-to-cart'),
     re_path(r'^remove_from_cart/(?P<pk>\d+)$', RemoveFromCartView.as_view(), name='remove-from-cart'),
     re_path(r'^order/(?P<pk>\d+)$', OrderDetailView.as_view(), name='order-detail'),
+    path('orders/', OrderListingView.as_view()),
+    path('customers/', CustomerListingView.as_view()),
+    re_path(r'^customer/(?P<pk>\d+)$', CustomerDetailView.as_view(), name='customer-detail'),
 
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),

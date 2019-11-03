@@ -18,7 +18,26 @@ class ProductListingView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        pprint(context)
+        return context
+
+
+class OrderListingView(ListView):
+    model = Order
+    paginate_by = 100  # if pagination is desired
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
+
+
+class CustomerListingView(ListView):
+    model = Customer
+    paginate_by = 100  # if pagination is desired
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
         return context
 
 
@@ -75,6 +94,20 @@ class ProductDetailView(DetailView):
         pprint(context)
 
         return context
+
+
+class CustomerDetailView(DetailView):
+    model = Customer
+    template_name = 'customer.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        customer = super(CustomerDetailView, self).get_object()
+        context["orders"] = Order.objects.filter(customer=customer.id)
+        pprint(context["orders"])
+
+        return context
+
 
 class OrderDetailView(DetailView):
     model = Order

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <h3>Orders</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Financial Status</th>
+            <th scope="col">Fulfillment Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in order_list %}
+            <tr>
+                <td><a href="/order/{{ order.id }}">{{ order.number }}</a></td>
+                <td><a href="/order/{{ order.id }}">{{ order.customer.first_name }} {{ order.customer.last_name }}</a></td>
+                <td><a href="/order/{{ order.id }}">{{ order.total_price }}</a></td>
+                <td><a href="/order/{{ order.id }}">{{ order.financial_status }}</a></td>
+                <td><a href="/order/{{ order.id }}">{{ order.fulfillment_status }}</a></td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+
+{% endblock %}

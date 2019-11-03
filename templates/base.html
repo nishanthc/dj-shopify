@@ -43,6 +43,15 @@
 
 
             {% endif %}
+            {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/orders">All Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/customers">All Customers</a>
+
+                </li>
+            {% endif %}
 
         </ul>
     </div>
