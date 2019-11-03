@@ -18,7 +18,7 @@ from django.urls import path, include, re_path
 
 from shop.views import OrderListingView, ProductListingView, CartView, ProductDetailView, AddToCartView, \
     RemoveFromCartView, \
-    OrderDetailView, CustomerListingView, CustomerDetailView
+    OrderDetailView, CustomerListingView, CustomerDetailView, SuccessView
 
 urlpatterns = [
     path('', ProductListingView.as_view()),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('orders/', OrderListingView.as_view()),
     path('customers/', CustomerListingView.as_view()),
     re_path(r'^customer/(?P<pk>\d+)$', CustomerDetailView.as_view(), name='customer-detail'),
+    path('success/', SuccessView.as_view()),
 
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),

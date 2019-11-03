@@ -50,14 +50,14 @@ class CartView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         variants_list = []
-
-        variants_session = self.request.session['variants']
-        for variant in variants_session:
-            try:
-                variant_object = Variant.objects.get(id=variant)
-                variants_list.append(variant_object)
-            except Variant.DoesNotExist:
-                pass
+        if "variants" in self.request.session:
+            variants_session = self.request.session['variants']
+            for variant in variants_session:
+                try:
+                    variant_object = Variant.objects.get(id=variant)
+                    variants_list.append(variant_object)
+                except Variant.DoesNotExist:
+                    pass
         total = 0
         for variant in variants_list:
             total = total + float(variant.price)
@@ -77,7 +77,9 @@ class CartView(CreateView):
         address = form.cleaned_data['address']
         email = form.cleaned_data['email']
         customer = form.instance
-        create_order(customer, cart_items)
+        if create_order(customer, cart_items) == "error":
+            messages.success(self.request, 'Error purchasing items!')
+            return redirect('cart')
         self.request.session['variants'] = []
 
         return super().form_valid(form)
@@ -129,6 +131,12 @@ class OrderDetailView(DetailView):
 
         return context
 
+class SuccessView(TemplateView):
+    template_name = 'success.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 class AddToCartView(View):
     def get(self, *args, **kwargs):

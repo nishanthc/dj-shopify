@@ -41,9 +41,13 @@ def create_order(customer, cart_items):
         }
     }
     x = requests.post(SHOPIFY_URL + 'orders.json', json=data)
+    json_content = json.loads(x.content)
+    if "errors" in json_content:
+        return "error"
     order_id = json.loads(x.content)["order"]["id"]
     populate_products()
     populate_orders()
+
     if customer:
         customer.save()
         order = Order.objects.get(id=order_id)
