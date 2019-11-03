@@ -1,5 +1,6 @@
 # Create your views here.
 import ast
+import time
 from pprint import pprint
 
 from django.contrib import messages
@@ -7,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, RedirectView, CreateView
 
-from shopify.api.api import create_order
+from shopify.api.api import create_order, populate_products
 from shopify.models import Product, Variant, Customer, Order
 
 
@@ -136,6 +137,8 @@ class SuccessView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        time.sleep(3)
+        populate_products()
         return context
 
 class AddToCartView(View):

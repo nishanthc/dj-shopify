@@ -30,7 +30,7 @@ urlpatterns = [
     path('orders/', OrderListingView.as_view()),
     path('customers/', CustomerListingView.as_view()),
     re_path(r'^customer/(?P<pk>\d+)$', CustomerDetailView.as_view(), name='customer-detail'),
-    path('success/', SuccessView.as_view()),
+    path('cart/success/', SuccessView.as_view()),
 
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
