@@ -30,6 +30,12 @@ SHOPIFY_STORE_NAME = 'nishio'
 SHOPIFY_SHARED_SECRET = 'ebfe5s5cd04b1002f6307b94b4267830'
 ```
 
+Run migrations:
+
+```
+python manage.py migrate
+
+
 Populate Django with your existing products:
 
 ```
