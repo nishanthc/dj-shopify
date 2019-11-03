@@ -7,7 +7,7 @@ from shopify.models import Product, Variant
 
 
 def populate_products():
-    response = requests.get(SHOPIFY_URL)
+    response = requests.get(SHOPIFY_URL+'products.json')
     response_dictionary = json.loads(response.content)
     products = response_dictionary["products"]
     for product in products:
@@ -64,4 +64,10 @@ def populate_products():
                 }
             )
 
+def populate_orders():
+    response = requests.get(SHOPIFY_URL+'orders.json')
+    response_dictionary = json.loads(response.content)
+    orders = response_dictionary["orders"]
 
+    for order in orders:
+        pprint(order)
