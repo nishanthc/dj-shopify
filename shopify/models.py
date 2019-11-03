@@ -155,147 +155,267 @@ class Order(TimeStampedModel):
     app_id = models.CharField(
         max_length=30
     )
-    browser_id = models.CharField(
-        max_length=30
+    browser_ip = models.CharField(
+        max_length=30,
+        null=True
     )
     buyer_accepts_marketing = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     cancel_reason = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     cancelled_at = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     cart_token = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     checkout_id = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     checkout_token = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     closed_at = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     confirmed = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     contact_email = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     created_at = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     currency = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     customer_locale = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     device_id = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     discount_applications = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     discount_codes = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     email = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     financial_status = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     fulfillment_status = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     fulfillments = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     gateway = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     landing_site = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     landing_site_ref = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     location_id = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     name = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     note = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     note_attributes = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     number = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     order_number = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     order_status_url = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     payment_gateway_names = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     phone = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     presentment_currency = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     processed_at = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     processing_method = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     reference = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     referring_site = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     refunds = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     shipping_lines = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     source_identifier = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     source_name = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     source_url = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     subtotal_price = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     subtotal_price_set = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     tags = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     tax_lines = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     taxes_included = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
     test = models.CharField(
-        max_length=30
+        max_length=30,
+        null=True
     )
+    token = models.CharField(
+        max_length=30,
+        null=True
+    )
+    test = models.CharField(
+        max_length=30,
+        null=True
+    )
+
+    line_items = models.CharField(
+        max_length=100,
+        null=True
+    )
+    total_discounts = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_discounts_set = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_line_items_price = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_line_items_price_set = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_price = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_price_set = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_price_usd = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_shipping_price_set = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_tax = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_tax_set = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_tip_received = models.CharField(
+        max_length=30,
+        null=True
+    )
+    total_weight = models.CharField(
+        max_length=30,
+        null=True
+    )
+    updated_at = models.CharField(
+        max_length=30,
+        null=True
+    )
+    user_id = models.CharField(
+        max_length=30,
+        null=True
+    )
+
+
+

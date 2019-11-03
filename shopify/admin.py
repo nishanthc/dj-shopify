@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from shopify.models import Product, Variant
+from shopify.models import Product, Variant, Order
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -16,6 +16,12 @@ class VariantAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Variant, VariantAdmin)
+
+class OrderAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Order, OrderAdmin)
 
 from django.contrib.sessions.models import Session
 
