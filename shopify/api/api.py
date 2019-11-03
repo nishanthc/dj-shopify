@@ -6,6 +6,51 @@ from djshopify.settings import SHOPIFY_URL
 from shopify.models import Product, Variant, Order
 
 
+def create_order(customer, cart_items):
+    line_items = []
+
+    for item in cart_items:
+        line = {
+            "variant_id": item.id,
+            "quantity": 1
+        }
+        line_items.append(line)
+    data = {
+        "order": {
+            "inventory_behaviour":"decrement_obeying_policy",
+            "fulfillment_status": "fulfilled",
+            "line_items": line_items,
+            "customer": {
+                "first_name": customer.first_name,
+                "last_name": customer.last_name,
+                "email": customer.email
+            },
+            "financial_status": "paid",
+            "shipping_address": {
+                "first_name": customer.first_name,
+                "last_name": customer.last_name,
+                "address1": customer.address,
+
+            },
+            "billing_address": {
+                "first_name": customer.first_name,
+                "last_name": customer.last_name,
+                "address1": customer.address,
+
+            }
+        }
+    }
+    x = requests.post(SHOPIFY_URL + 'orders.json', json=data)
+    order_id = json.loads(x.content)["order"]["id"]
+    populate_products()
+    populate_orders()
+    if customer:
+        customer.save()
+        order = Order.objects.get(id=order_id)
+        order.customer = customer
+        order.save()
+
+
 def populate_products():
     response = requests.get(SHOPIFY_URL + 'products.json')
     response_dictionary = json.loads(response.content)
@@ -31,7 +76,6 @@ def populate_products():
         )
         variants = product["variants"]
         for variant in variants:
-            pprint(variant)
             variant_object, created = Variant.objects.update_or_create(
                 id=variant["id"],
                 defaults={
@@ -71,7 +115,6 @@ def populate_orders():
     orders = response_dictionary["orders"]
 
     for order in orders:
-        pprint(order)
         order_object, created = Order.objects.update_or_create(
             id=order["id"],
             defaults={

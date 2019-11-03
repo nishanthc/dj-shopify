@@ -23,7 +23,7 @@ class ProductListingView(ListView):
 
 class CartView(CreateView):
     model = Customer
-    fields = ('first_name', 'last_name', 'address','email')
+    fields = ('first_name', 'last_name', 'address', 'email')
     success_url = "success"
     template_name = 'cart.html'
 
@@ -31,14 +31,13 @@ class CartView(CreateView):
         context = super().get_context_data(**kwargs)
         variants_list = []
 
-        if not self.request.user.is_authenticated:
-            variants_session = self.request.session['variants']
-            for variant in variants_session:
-                try:
-                    variant_object = Variant.objects.get(id=variant)
-                    variants_list.append(variant_object)
-                except Variant.DoesNotExist:
-                    pass
+        variants_session = self.request.session['variants']
+        for variant in variants_session:
+            try:
+                variant_object = Variant.objects.get(id=variant)
+                variants_list.append(variant_object)
+            except Variant.DoesNotExist:
+                pass
         total = 0
         for variant in variants_list:
             total = total + float(variant.price)
@@ -49,8 +48,8 @@ class CartView(CreateView):
     def form_valid(self, form, **kwargs):
         if self.request.user:
             user = self.request.user
-
-            form.instance.user = user.id
+            if not user.id == None:
+                form.instance.user = user
         context = self.get_context_data(**kwargs)
         cart_items = context["cart_items"]
         first_name = form.cleaned_data['first_name']
@@ -58,7 +57,7 @@ class CartView(CreateView):
         address = form.cleaned_data['address']
         email = form.cleaned_data['email']
         customer = form.instance
-        create_order(customer,cart_items)
+        create_order(customer, cart_items)
         self.request.session['variants'] = []
 
         return super().form_valid(form)
@@ -80,21 +79,17 @@ class ProductDetailView(DetailView):
 class AddToCartView(View):
     def get(self, *args, **kwargs):
         variant = get_object_or_404(Variant, pk=kwargs['pk'])
-        if not self.request.user.is_authenticated:
-            if self.request.session.is_empty():
-                self.request.session['variants'] = []
-            self.request.session['variants'].append(variant.id)
-            messages.success(self.request, 'Product sucessfully added to your cart!')
-            return redirect('product-detail', pk=variant.product_id.id)
-        else:
-            return redirect('product-detail', pk=variant.product_id.id)
+
+        if not isinstance(self.request.session['variants'], list):
+            self.request.session['variants'] = []
+        self.request.session['variants'].append(variant.id)
+        messages.success(self.request, 'Product sucessfully added to your cart!')
+        return redirect('product-detail', pk=variant.product_id.id)
+
 
 class RemoveFromCartView(View):
     def get(self, *args, **kwargs):
         variant = get_object_or_404(Variant, pk=kwargs['pk'])
-        if not self.request.user.is_authenticated:
-            self.request.session['variants'].remove(variant.id)
-            messages.success(self.request, 'Product removed from your cart!')
-            return redirect('cart')
-        else:
-            return redirect('cart')
+        self.request.session['variants'].remove(variant.id)
+        messages.success(self.request, 'Product removed from your cart!')
+        return redirect('cart')

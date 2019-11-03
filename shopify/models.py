@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import CASCADE
 
@@ -144,11 +145,41 @@ class Variant(TimeStampedModel):
         return f"{self.product_id} - {self.title}"
 
 
+class Customer(TimeStampedModel):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    first_name = models.CharField(
+        max_length=30,
+    )
+    last_name = models.CharField(
+        max_length=30,
+    )
+    email = models.CharField(
+        max_length=30,
+    )
+    address = models.CharField(
+        max_length=30,
+    )
+
+    def __str__(self):
+        return self.email
+
+
 class Order(TimeStampedModel):
     id = models.CharField(
         primary_key=True,
         max_length=30
     )
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=CASCADE,
+        related_name="customer",
+        null=True
+    )
+
     admin_graphql_api_id = models.CharField(
         max_length=30
     )
@@ -419,6 +450,3 @@ class Order(TimeStampedModel):
 
     def __str__(self):
         return self.name
-
-
-
