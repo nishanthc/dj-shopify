@@ -28,28 +28,25 @@
         </tbody>
     </table>
 
-    {#    <h3>Variants</h3>#}
-    {#    <table class="table table-striped">#}
-    {#        <thead>#}
-    {#        <tr>#}
-    {#            <th scope="col">Name</th>#}
-    {#            <th scope="col">Stock</th>#}
-    {#            <th scope="col">Price</th>#}
-    {#            <th scope="col"></th>#}
-    {#        </tr>#}
-    {#        </thead>#}
-    {#        <tbody>#}
-    {#        {% for variant in variants %}#}
-    {#            <tr>#}
-    {#                <th scope="row">{{ variant.title }}</th>#}
-    {#                <td>{{ variant.inventory_quantity }}</td>#}
-    {#                <td>{{ variant.price }}</td>#}
-    {#                <td><a href="/add_to_cart/{{ variant.id }}">Add to Cart</a></td>#}
-    {#            </tr>#}
-    {#        {% endfor %}#}
-    {##}
-    {##}
-    {#        </tbody>#}
-    {#    </table>#}
+        <h3>Order Items</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in order_items %}
+                <tr>
+                    <th scope="row">{{ item.variant }}</th>
+                    <td>{{ item.price }}</td>
+
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
 
 {% endblock %}

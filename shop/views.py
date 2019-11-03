@@ -1,4 +1,5 @@
 # Create your views here.
+import ast
 from pprint import pprint
 
 from django.contrib import messages
@@ -82,6 +83,16 @@ class OrderDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         order = super(OrderDetailView, self).get_object()
+
+        variants_with_price = []
+        line_items = ast.literal_eval(order.line_items)
+        for item in line_items:
+            pprint(item)
+            variants_with_price.append({
+                "variant": Variant.objects.get(id=item["variant_id"]),
+                "price": item["price"]
+            })
+        context["order_items"] = variants_with_price
 
         return context
 
