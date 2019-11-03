@@ -141,8 +141,7 @@ class SuccessView(TemplateView):
 class AddToCartView(View):
     def get(self, *args, **kwargs):
         variant = get_object_or_404(Variant, pk=kwargs['pk'])
-
-        if not isinstance(self.request.session['variants'], list):
+        if not "variants" in self.request.session:
             self.request.session['variants'] = []
         self.request.session['variants'].append(variant.id)
         messages.success(self.request, 'Product sucessfully added to your cart!')
