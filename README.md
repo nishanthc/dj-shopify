@@ -35,10 +35,10 @@ Run migrations:
 ```
 python manage.py migrate
 
-
-Populate Django with your existing products:
-
 ```
+Populate Django with your existing products:
+```
+
 python manage.py populate_products
 
 ```
